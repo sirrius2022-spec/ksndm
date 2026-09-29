@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>김토목 | 토목 건설사업관리 전문가</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="토목 건설사업관리, 감리 전문가 김토목의 포트폴리오 웹사이트입니다.">
+    <meta name="keywords" content="토목, 건설사업관리, 감리, 포트폴리오, 엔지니어, Civil Engineering, Construction Management">
+    
+    <!-- Fonts: Pretendard for clean Korean typography -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Pretendard', 'ui-sans-serif', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#1e3a8a', // Deep Blue for trust & engineering
+                        secondary: '#f59e0b', // Amber for construction accent
+                        dark: '#1f2937',
+                        light: '#f3f4f6',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom CSS for additional styling and animations */
+        body {
+            font-family: 'Pretendard', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -9px;
+            top: 5px;
+            width: 20px;
+            height: 20px;
+            background-color: #f59e0b;
+            border-radius: 50%;
+            border: 4px solid #fff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .project-card:hover .project-overlay {
+            opacity: 1;
+        }
+
+        .project-card:hover img {
+            transform: scale(1.05);
+        }
+        
+        .progress-bar {
+            transition: width 1.5s ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 antialiased">
+
+    <!-- Navigation -->
+    <header class="fixed w-full top-0 z-50 bg-white/90 backdrop-blur-md shadow-sm transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex-shrink-0 flex items-center">
+                    <a href="#" class="text-2xl font-bold text-primary tracking-tight">
+                        <i class="fa-solid fa-helmet-safety text-secondary mr-2"></i>KIM CM
+                    </a>
+                </div>
+                <div class="hidden md:flex space-x-8 items-center">
+                    <a href="#about" class="text-gray-600 hover:text-primary font-medium transition">소개</a>
+                    <a href="#experience" class="text-gray-600 hover:text-primary font-medium transition">경력</a>
+                    <a href="#skills" class="text-gray-600 hover:text-primary font-medium transition">핵심역량</a>
+                    <a href="#projects" class="text-gray-600 hover:text-primary font-medium transition">프로젝트</a>
+                    <a href="#contact" class="bg-primary text-white px-5 py-2 rounded-full font-medium hover:bg-blue-800 transition shadow-md">연락하기</a>
+                </div>
+                <!-- Mobile menu button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-gray-600 hover:text-primary focus:outline-none text-2xl">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-100 absolute w-full shadow-lg">
+            <div class="px-4 pt-2 pb-6 space-y-2">
+                <a href="#about" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-primary hover:bg-gray-50 rounded-md">소개</a>
+                <a href="#experience" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-primary hover:bg-gray-50 rounded-md">경력</a>
+                <a href="#skills" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-primary hover:bg-gray-50 rounded-md">핵심역량</a>
+                <a href="#projects" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-primary hover:bg-gray-50 rounded-md">프로젝트</a>
+                <a href="#contact" class="block px-3 py-2 text-base font-medium text-primary hover:bg-gray-50 rounded-md">연락하기</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden bg-primary">
+        <div class="absolute inset-0 opacity-20">
+            <!-- Background Image Placeholder (Construction Site) -->
+            <img src="https://images.unsplash.com/photo-1541888086425-d81bb19240f5?auto=format&fit=crop&q=80&w=2000" alt="Construction background" class="w-full h-full object-cover">
+        </div>
+        <div class="absolute inset-0 bg-gradient-to-r from-primary via-primary/90 to-transparent"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="lg:w-2/3 reveal">
+                <span class="inline-block py-1 px-3 rounded-full bg-secondary text-white text-sm font-semibold tracking-wider mb-4">
+                    Civil Engineering & Construction Management
+                </span>
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">
+                    성공적인 건설 프로젝트를 위한 <br>
+                    <span class="text-secondary">최고의 사업관리 파트너</span>
+                </h1>
+                <p class="text-lg md:text-xl text-blue-100 mb-8 max-w-2xl leading-relaxed">
+                    15년 이상의 현장 경험을 바탕으로 철저한 공정, 품질, 안전 관리를 통해 최상의 인프라를 구축합니다. 가치를 창출하는 토목 건설사업관리(감리) 전문가 김토목입니다.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <a href="#projects" class="bg-secondary hover:bg-amber-600 text-white font-bold py-3 px-8 rounded-full shadow-lg transition transform hover:-translate-y-1 text-center">
+                        프로젝트 보기
+                    </a>
+                    <a href="#contact" class="bg-white hover:bg-gray-100 text-primary font-bold py-3 px-8 rounded-full shadow-lg transition transform hover:-translate-y-1 text-center">
+                        이력서 다운로드 <i class="fa-solid fa-download ml-2"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="reveal">
+                    <div class="relative rounded-2xl overflow-hidden shadow-2xl">
+                        <img src="https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?auto=format&fit=crop&q=80&w=1000" alt="Profile" class="w-full h-[500px] object-cover">
+                        <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-gray-900 to-transparent p-6 text-white">
+                            <p class="text-xl font-bold">김토목 (Kim Tomok)</p>
+                            <p class="text-sm opacity-90">토목시공기술사 / 건설사업관리 특급기술인</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="reveal">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-2">Philosophy & Vision</h2>
+                    <div class="w-16 h-1 bg-secondary mb-6"></div>
+                    <p class="text-gray-600 mb-6 text-lg leading-relaxed">
+                        건설사업관리는 단순한 현장 감독을 넘어, <strong>발주처의 목표를 실현하고 프로젝트의 생애주기 가치를 극대화</strong>하는 종합 예술입니다. 
+                    </p>
+                    <p class="text-gray-600 mb-8 leading-relaxed">
+                        대규모 도로, 교량, 단지 조성 등 다양한 토목 프로젝트를 성공적으로 이끌어왔으며, 리스크를 사전에 예측하고 해결하는 문제 해결 능력에 자부심을 가지고 있습니다. 기술적 전문성과 원활한 소통 능력으로 모두가 만족하는 결과물을 만들어냅니다.
+                    </p>
+                    
+                    <div class="grid grid-cols-2 gap-6">
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 bg-blue-100 rounded-lg p-3 text-primary">
+                                <i class="fa-solid fa-shield-halved text-2xl"></i>
+                            </div>
+                            <div class="ml-4">
+                                <h4 class="text-lg font-bold text-gray-900">Zero Accident</h4>
+                                <p class="text-sm text-gray-500 mt-1">무재해 현장 달성을 위한 철저한 안전관리 체계 구축</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 bg-blue-100 rounded-lg p-3 text-primary">
+                                <i class="fa-solid fa-magnifying-glass-chart text-2xl"></i>
+                            </div>
+                            <div class="ml-4">
+                                <h4 class="text-lg font-bold text-gray-900">High Quality</h4>
+                                <p class="text-sm text-gray-500 mt-1">시방서 및 설계도서를 기반으로 한 엄격한 품질통제</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 bg-blue-100 rounded-lg p-3 text-primary">
+                                <i class="fa-solid fa-clock-rotate-left text-2xl"></i>
+                            </div>
+                            <div class="ml-4">
+                                <h4 class="text-lg font-bold text-gray-900">On-Time</h4>
+                                <p class="text-sm text-gray-500 mt-1">공정 리스크 사전 분석 및 최적화된 공기 관리</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 bg-blue-100 rounded-lg p-3 text-primary">
+                                <i class="fa-solid fa-coins text-2xl"></i>
+                            </div>
+                            <div class="ml-4">
+                                <h4 class="text-lg font-bold text-gray-900">Cost Value</h4>
+                                <p class="text-sm text-gray-500 mt-1">설계변경 최소화 및 VE(가치공학)를 통한 원가 절감</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-3xl font-bold text-gray-900 mb-2">Professional Experience</h2>
+                <div class="w-16 h-1 bg-secondary mx-auto mb-4"></div>
+                <p class="text-gray-600">토목 건설사업관리 분야에서의 발자취</p>
+            </div>
+
+            <div class="max-w-4xl mx-auto">
+                <div class="relative border-l-2 border-gray-200 ml-4 md:ml-0 md:pl-0">
+                    
+                    <!-- Timeline Item 1 -->
+                    <div class="mb-10 relative md:ml-8 pl-6 reveal timeline-item">
+                        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition">
+                            <span class="text-sm font-bold text-primary mb-1 block">2021.03 - 현재</span>
+                            <h3 class="text-xl font-bold text-gray-900">(주)한국토목엔지니어링 | 건설사업관리단장</h3>
+                            <p class="text-gray-500 text-sm mb-3">수도권 제2순환고속도로 제O공구 전면책임감리</p>
+                            <ul class="list-disc list-inside text-gray-600 space-y-1 text-sm">
+                                <li>총 사업비 2,500억 규모 고속도로 건설공사 총괄 관리</li>
+                                <li>터널(3.2km) 및 교량(5개소) 시공 품질/안전/공정 관리</li>
+                                <li>BIM(Building Information Modeling) 적용을 통한 간섭 검토 및 공기 2개월 단축</li>
+                                <li>발주처, 시공사, 지역 민원 등 이해관계자 갈등 조정</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Timeline Item 2 -->
+                    <div class="mb-10 relative md:ml-8 pl-6 reveal timeline-item">
+                        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition">
+                            <span class="text-sm font-bold text-primary mb-1 block">2016.05 - 2021.02</span>
+                            <h3 class="text-xl font-bold text-gray-900">(주)대한감리기술 | 책임사업관리기술인</h3>
+                            <p class="text-gray-500 text-sm mb-3">OO신도시 3단계 부지조성공사 건설사업관리</p>
+                            <ul class="list-disc list-inside text-gray-600 space-y-1 text-sm">
+                                <li>150만평 규모 연약지반 개량 및 단지 조성 공사 감리</li>
+                                <li>스마트 건설기술(드론 측량, 자동화 장비) 도입 지원 및 검증</li>
+                                <li>VE(Value Engineering) 제안을 통해 공사비 약 15% 절감 달성</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Timeline Item 3 -->
+                    <div class="mb-10 relative md:ml-8 pl-6 reveal timeline-item">
+                        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition">
+                            <span class="text-sm font-bold text-primary mb-1 block">2010.01 - 2016.04</span>
+                            <h3 class="text-xl font-bold text-gray-900">제일건설산업(주) | 공무/시공 담당 (과장)</h3>
+                            <p class="text-gray-500 text-sm mb-3">다수의 도로 및 상하수도 현장 시공 관리</p>
+                            <ul class="list-disc list-inside text-gray-600 space-y-1 text-sm">
+                                <li>시공계획서 작성, 하도급 관리, 기성 청구 및 설계 변경 업무 수행</li>
+                                <li>현장 공정률 데이터화 및 MS Project를 활용한 일정 최적화</li>
+                                <li>무재해 현장 3배수 달성 기여</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-20 bg-primary text-white relative overflow-hidden">
+        <!-- Abstract Background Shapes -->
+        <div class="absolute top-0 right-0 -mr-20 -mt-20 w-64 h-64 rounded-full border-4 border-white/10 opacity-50"></div>
+        <div class="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 rounded-full border-4 border-white/10 opacity-50"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-3xl font-bold mb-2">Core Competencies</h2>
+                <div class="w-16 h-1 bg-secondary mx-auto mb-4"></div>
+                <p class="text-blue-200">성공적인 사업관리를 위한 전문 역량</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <!-- Management Skills -->
+                <div class="reveal">
+                    <h3 class="text-xl font-bold mb-6 flex items-center"><i class="fa-solid fa-list-check mr-3 text-secondary"></i> 직무 역량</h3>
+                    
+                    <div class="mb-5">
+                        <div class="flex justify-between mb-1">
+                            <span class="text-sm font-medium">공정관리 (Schedule Management)</span>
+                            <span class="text-sm font-medium">95%</span>
+                        </div>
+                        <div class="w-full bg-blue-900 rounded-full h-2.5">
+                            <div class="bg-secondary h-2.5 rounded-full progress-bar" data-width="95%" style="width: 0%"></div>
+                        </div>
+                    </div>
+
+                    <div class="mb-5">
+                        <div class="flex justify-between mb-1">
+                            <span class="text-sm font-medium">품질관리 (Quality Control)</span>
+                            <span class="text-sm font-medium">90%</span>
+                        </div>
+                        <div class="w-full bg-blue-900 rounded-full h-2.5">
+                            <div class="bg-secondary h-2.5 rounded-full progress-bar" data-width="90%" style="width: 0%"></div>
+                        </div>
+                    </div>
+
+                    <div class="mb-5">
+                        <div class="flex justify-between mb-1">
+                            <span class="text-sm font-medium">안전/환경관리 (HSE Management)</span>
+                            <span class="text-sm font-medium">98%</span>
+                        </div>
+                        <div class="w-full bg-blue-900 rounded-full h-2.5">
+                            <div class="bg-secondary h-2.5 rounded-full progress-bar" data-width="98%" style="width: 0%"></div>
+                        </div>
+                    </div>
+
+                    <div class="mb-5">
+                        <div class="flex justify-between mb-1">
+                            <span class="text-sm font-medium">원가 및 계약관리 (Cost & Contract)</span>
+                            <span class="text-sm font-medium">85%</span>
+                        </div>
+                        <div class="w-full bg-blue-900 rounded-full h-2.5">
+                            <div class="bg-secondary h-2.5 rounded-full progress-bar" data-width="85%" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Technical Tools & Licenses -->
+                <div class="reveal">
+                    <h3 class="text-xl font-bold mb-6 flex items-center"><i class="fa-solid fa-laptop-code mr-3 text-secondary"></i> S/W 및 자격 현황</h3>
+                    
+                    <div class="bg-white/10 rounded-xl p-6 backdrop-blur-sm border border-white/20 mb-6">
+                        <h4 class="font-semibold mb-3 text-blue-100 border-b border-white/20 pb-2">사용 프로그램</h4>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 bg-white/20 rounded-full text-sm">AutoCAD</span>
+                            <span class="px-3 py-1 bg-white/20 rounded-full text-sm">Civil 3D</span>
+                            <span class="px-3 py-1 bg-white/20 rounded-full text-sm">MS Project</span>
+                            <span class="px-3 py-1 bg-white/20 rounded-full text-sm">Primavera P6</span>
+                            <span class="px-3 py-1 bg-white/20 rounded-full text-sm">MIDAS Civil</span>
+                            <span class="px-3 py-1 bg-white/20 rounded-full text-sm">Excel (Advanced)</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-white/10 rounded-xl p-6 backdrop-blur-sm border border-white/20">
+                        <h4 class="font-semibold mb-3 text-blue-100 border-b border-white/20 pb-2">보유 자격증</h4>
+                        <ul class="space-y-2 text-sm">
+                            <li class="flex items-center"><i class="fa-solid fa-certificate text-secondary mr-2"></i> 토목시공기술사 (한국산업인력공단)</li>
+                            <li class="flex items-center"><i class="fa-solid fa-certificate text-secondary mr-2"></i> 건설안전기사 (한국산업인력공단)</li>
+                            <li class="flex items-center"><i class="fa-solid fa-certificate text-secondary mr-2"></i> 건설사업관리 특급기술인 (한국건설기술인협회)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Portfolio Section -->
+    <section id="projects" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-3xl font-bold text-gray-900 mb-2">Major Projects</h2>
+                <div class="w-16 h-1 bg-secondary mx-auto mb-4"></div>
+                <p class="text-gray-600">성공적으로 수행한 주요 건설사업관리 프로젝트</p>
+            </div>
+
+            <!-- Project Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <!-- Project 1 -->
+                <div class="project-card bg-white rounded-2xl overflow-hidden shadow-lg border border-gray-100 relative group reveal">
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1545465225-b8fb2b23a789?auto=format&fit=crop&q=80&w=800" alt="Highway Construction" class="w-full h-full object-cover transition duration-500">
+                        <div class="project-overlay absolute inset-0 bg-primary/80 opacity-0 transition duration-300 flex items-center justify-center backdrop-blur-sm">
+                            <a href="#" class="inline-block border-2 border-white text-white px-6 py-2 rounded-full hover:bg-white hover:text-primary font-bold transition">상세 보기</a>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <span class="text-xs font-bold text-secondary uppercase tracking-wider mb-2 block">도로/터널 (Highway)</span>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">수도권 제2순환고속도로</h3>
+                        <p class="text-gray-600 text-sm mb-4 line-clamp-3">산악지형을 통과하는 3.2km 장대터널 및 복합 교량 건설공사. NATM 공법 적용 시공 감리 및 주변 환경 피해 최소화를 위한 계측 관리 총괄.</p>
+                        <div class="flex justify-between items-center text-sm border-t border-gray-100 pt-4 mt-auto">
+                            <span class="text-gray-500"><i class="fa-regular fa-calendar mr-1"></i> 2021-현재</span>
+                            <span class="text-primary font-semibold">단장</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="project-card bg-white rounded-2xl overflow-hidden shadow-lg border border-gray-100 relative group reveal" style="transition-delay: 100ms;">
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1536244636800-a3f74db0f3cf?auto=format&fit=crop&q=80&w=800" alt="Urban Development" class="w-full h-full object-cover transition duration-500">
+                        <div class="project-overlay absolute inset-0 bg-primary/80 opacity-0 transition duration-300 flex items-center justify-center backdrop-blur-sm">
+                            <a href="#" class="inline-block border-2 border-white text-white px-6 py-2 rounded-full hover:bg-white hover:text-primary font-bold transition">상세 보기</a>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <span class="text-xs font-bold text-secondary uppercase tracking-wider mb-2 block">단지조성 (Urban Dev.)</span>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">OO택지지구 부지조성공사</h3>
+                        <p class="text-gray-600 text-sm mb-4 line-clamp-3">150만평 규모의 신도시 기반 시설 및 연약지반 개량 공사. SCP(Sand Compaction Pile) 및 PBD 공법 적용에 대한 품질 검수 및 스마트 토공 자동화 시스템 적용.</p>
+                        <div class="flex justify-between items-center text-sm border-t border-gray-100 pt-4 mt-auto">
+                            <span class="text-gray-500"><i class="fa-regular fa-calendar mr-1"></i> 2016-2021</span>
+                            <span class="text-primary font-semibold">책임기술인</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 3 -->
+                <div class="project-card bg-white rounded-2xl overflow-hidden shadow-lg border border-gray-100 relative group reveal" style="transition-delay: 200ms;">
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1513828742140-ccaa15f19387?auto=format&fit=crop&q=80&w=800" alt="Bridge Construction" class="w-full h-full object-cover transition duration-500">
+                        <div class="project-overlay absolute inset-0 bg-primary/80 opacity-0 transition duration-300 flex items-center justify-center backdrop-blur-sm">
+                            <a href="#" class="inline-block border-2 border-white text-white px-6 py-2 rounded-full hover:bg-white hover:text-primary font-bold transition">상세 보기</a>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <span class="text-xs font-bold text-secondary uppercase tracking-wider mb-2 block">교량 (Bridge)</span>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">해상 사장교 건립공사 (참여)</h3>
+                        <p class="text-gray-600 text-sm mb-4 line-clamp-3">도서 지역을 연결하는 주경간 400m급 강합성 사장교 건설. 해상 기초 파일 항타 및 주탑 슬립폼(Slip form) 시공 단계별 공정/품질 점검 수행.</p>
+                        <div class="flex justify-between items-center text-sm border-t border-gray-100 pt-4 mt-auto">
+                            <span class="text-gray-500"><i class="fa-regular fa-calendar mr-1"></i> 2013-2015</span>
+                            <span class="text-primary font-semibold">분야별 기술인</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-3xl font-bold text-gray-900 mb-2">Get In Touch</h2>
+                <div class="w-16 h-1 bg-secondary mx-auto mb-4"></div>
+                <p class="text-gray-600">프로젝트 의뢰 및 채용 관련 문의를 환영합니다.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
+                <!-- Contact Info -->
+                <div class="lg:col-span-1 space-y-6 reveal">
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex items-start">
+                        <div class="flex-shrink-0 bg-blue-50 p-3 rounded-full text-primary">
+                            <i class="fa-solid fa-envelope text-xl"></i>
+                        </div>
+                        <div class="ml-4">
+                            <h4 class="text-lg font-bold text-gray-900">이메일</h4>
+                            <p class="text-gray-600">civil.cm.expert@example.com</p>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex items-start">
+                        <div class="flex-shrink-0 bg-blue-50 p-3 rounded-full text-primary">
+                            <i class="fa-solid fa-phone text-xl"></i>
+                        </div>
+                        <div class="ml-4">
+                            <h4 class="text-lg font-bold text-gray-900">전화번호</h4>
+                            <p class="text-gray-600">010-1234-5678</p>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex items-start">
+                        <div class="flex-shrink-0 bg-blue-50 p-3 rounded-full text-primary">
+                            <i class="fa-solid fa-location-dot text-xl"></i>
+                        </div>
+                        <div class="ml-4">
+                            <h4 class="text-lg font-bold text-gray-900">위치</h4>
+                            <p class="text-gray-600">서울특별시 강남구 테헤란로</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Form -->
+                <div class="lg:col-span-2 reveal">
+                    <form id="contact-form" class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                            <div>
+                                <label for="name" class="block text-sm font-medium text-gray-700 mb-2">이름 / 회사명</label>
+                                <input type="text" id="name" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition" placeholder="홍길동 / (주)건설" required>
+                            </div>
+                            <div>
+                                <label for="email" class="block text-sm font-medium text-gray-700 mb-2">이메일</label>
+                                <input type="email" id="email" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition" placeholder="example@domain.com" required>
+                            </div>
+                        </div>
+                        <div class="mb-6">
+                            <label for="subject" class="block text-sm font-medium text-gray-700 mb-2">제목</label>
+                            <input type="text" id="subject" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition" placeholder="문의 사항의 제목을 적어주세요." required>
+                        </div>
+                        <div class="mb-6">
+                            <label for="message" class="block text-sm font-medium text-gray-700 mb-2">내용</label>
+                            <textarea id="message" rows="5" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition resize-none" placeholder="상세 문의 내용을 작성해주세요." required></textarea>
+                        </div>
+                        <button type="submit" class="w-full bg-primary hover:bg-blue-800 text-white font-bold py-4 rounded-lg shadow-md transition transform hover:-translate-y-1">
+                            메시지 보내기 <i class="fa-solid fa-paper-plane ml-2"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center">
+            <div class="mb-4 md:mb-0">
+                <a href="#" class="text-2xl font-bold tracking-tight text-white flex items-center">
+                    <i class="fa-solid fa-helmet-safety text-secondary mr-2"></i>KIM CM
+                </a>
+                <p class="text-gray-400 text-sm mt-2">© 2026 Kim Tomok. All rights reserved.</p>
+            </div>
+            <div class="flex space-x-6">
+                <a href="#" class="text-gray-400 hover:text-white transition text-xl"><i class="fa-brands fa-linkedin"></i></a>
+                <a href="#" class="text-gray-400 hover:text-white transition text-xl"><i class="fa-brands fa-github"></i></a>
+                <a href="#" class="text-gray-400 hover:text-white transition text-xl"><i class="fa-solid fa-blog"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Form Submission Message Box (Hidden by default) -->
+    <div id="message-box" class="fixed bottom-5 right-5 bg-green-500 text-white px-6 py-4 rounded-lg shadow-2xl transform translate-y-20 opacity-0 transition-all duration-300 z-50 flex items-center">
+        <i class="fa-solid fa-circle-check text-2xl mr-3"></i>
+        <div>
+            <h4 class="font-bold">전송 성공!</h4>
+            <p class="text-sm text-green-100">문의하신 내용이 성공적으로 전달되었습니다.</p>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. Mobile Menu Toggle
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const mobileLinks = mobileMenu.querySelectorAll('a');
+
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            // Close mobile menu when a link is clicked
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                });
+            });
+
+            // 2. Sticky Navbar & Background Change on Scroll
+            const navbar = document.getElementById('navbar');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('shadow-md');
+                    navbar.classList.remove('py-2');
+                } else {
+                    navbar.classList.remove('shadow-md');
+                    navbar.classList.add('py-2');
+                }
+            });
+
+            // 3. Scroll Reveal Animation & Progress Bar Animation
+            const revealElements = document.querySelectorAll('.reveal');
+            const progressBars = document.querySelectorAll('.progress-bar');
+            
+            const revealOnScroll = () => {
+                const windowHeight = window.innerHeight;
+                const elementVisible = 100;
+
+                // Reveal text/cards
+                revealElements.forEach(el => {
+                    const elementTop = el.getBoundingClientRect().top;
+                    if (elementTop < windowHeight - elementVisible) {
+                        el.classList.add('active');
+                    }
+                });
+
+                // Animate progress bars when skills section is visible
+                progressBars.forEach(bar => {
+                    const elementTop = bar.getBoundingClientRect().top;
+                    if (elementTop < windowHeight - elementVisible) {
+                        const targetWidth = bar.getAttribute('data-width');
+                        bar.style.width = targetWidth;
+                    }
+                });
+            };
+
+            window.addEventListener('scroll', revealOnScroll);
+            revealOnScroll(); // Trigger on load
+
+            // 4. Contact Form Submission Handling (Prevent default alert, show custom message box)
+            const contactForm = document.getElementById('contact-form');
+            const messageBox = document.getElementById('message-box');
+
+            contactForm.addEventListener('submit', (e) => {
+                e.preventDefault(); // Prevent page reload
+                
+                // Show message box
+                messageBox.classList.remove('translate-y-20', 'opacity-0');
+                
+                // Hide after 3 seconds
+                setTimeout(() => {
+                    messageBox.classList.add('translate-y-20', 'opacity-0');
+                    contactForm.reset(); // Clear form
+                }, 3000);
+            });
+        });
+    </script>
+</body>
+</html>
