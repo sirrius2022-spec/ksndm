@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>심플 QR 코드 생성기</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: #f3f4f6; /* bg-gray-100 */
+        }
+        
+        /* Custom scrollbar for better aesthetics */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8; 
+        }
+
+        /* Animation for the QR code appearance */
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        .qr-animate {
+            animation: fadeInScale 0.3s ease-out forwards;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4">
+
+    <div class="bg-white rounded-2xl shadow-xl w-full max-w-md p-6 sm:p-8 transition-all duration-300">
+        
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <h1 class="text-2xl font-bold text-gray-800 mb-2">QR 코드 생성기</h1>
+            <p class="text-sm text-gray-500">URL이나 텍스트를 입력하면 즉시 QR 코드가 생성됩니다.</p>
+        </div>
+
+        <!-- Input Section -->
+        <div class="space-y-4 mb-6">
+            <div>
+                <label for="textInput" class="block text-sm font-medium text-gray-700 mb-1">내용 입력</label>
+                <div class="relative">
+                    <input type="text" id="textInput" 
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-shadow text-gray-800 placeholder-gray-400"
+                        placeholder="https://example.com 또는 텍스트 입력"
+                        autocomplete="off">
+                    <!-- Clear button (hidden by default) -->
+                    <button id="clearBtn" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 hidden">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            
+            <button id="generateBtn" 
+                class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 flex justify-center items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm14 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" />
+                </svg>
+                QR 코드 생성
+            </button>
+        </div>
+
+        <!-- QR Code Display Section -->
+        <div id="qrContainer" class="hidden flex flex-col items-center pt-6 border-t border-gray-100">
+            <div id="qrcode" class="p-4 bg-white rounded-xl shadow-sm border border-gray-200"></div>
+            
+            <!-- Actions -->
+            <div class="flex gap-3 mt-6 w-full">
+                <button id="downloadBtn" class="flex-1 bg-gray-800 hover:bg-gray-900 text-white font-medium py-2.5 px-4 rounded-lg transition-colors flex justify-center items-center gap-2 text-sm">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                    </svg>
+                    다운로드
+                </button>
+                <button id="copyBtn" class="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-800 font-medium py-2.5 px-4 rounded-lg transition-colors flex justify-center items-center gap-2 text-sm">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
+                    </svg>
+                    링크 복사
+                </button>
+            </div>
+            
+            <!-- Notification toast -->
+            <div id="toast" class="fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white px-4 py-2 rounded-lg shadow-lg text-sm transition-opacity duration-300 opacity-0 pointer-events-none">
+                복사되었습니다!
+            </div>
+        </div>
+        
+        <!-- Empty State message -->
+        <div id="emptyState" class="text-center py-8 text-gray-400">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto mb-3 opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm14 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" />
+            </svg>
+            <p>여기에 QR 코드가 표시됩니다</p>
+        </div>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // DOM Elements
+            const textInput = document.getElementById('textInput');
+            const generateBtn = document.getElementById('generateBtn');
+            const clearBtn = document.getElementById('clearBtn');
+            const qrContainer = document.getElementById('qrContainer');
+            const qrcodeDiv = document.getElementById('qrcode');
+            const emptyState = document.getElementById('emptyState');
+            const downloadBtn = document.getElementById('downloadBtn');
+            const copyBtn = document.getElementById('copyBtn');
+            const toast = document.getElementById('toast');
+
+            // Store the current QR code instance
+            let currentQRCode = null;
+
+            
+            // Handle input changes to show/hide clear button
+            textInput.addEventListener('input', () => {
+                if (textInput.value.length > 0) {
+                    clearBtn.classList.remove('hidden');
+                } else {
+                    clearBtn.classList.add('hidden');
+                }
+            });
+
+            // Handle clear button click
+            clearBtn.addEventListener('click', () => {
+                textInput.value = '';
+                clearBtn.classList.add('hidden');
+                textInput.focus();
+                // Optionally clear QR code when input is cleared
+                // hideQRCode();
+            });
+
+            // Handle generate button click
+            generateBtn.addEventListener('click', generateQRCode);
+
+            // Handle Enter key press in input field
+            textInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    generateQRCode();
+                }
+            });
+
+            // Handle Download button click
+            downloadBtn.addEventListener('click', downloadQRCode);
+
+            // Handle Copy Link button click
+            copyBtn.addEventListener('click', copyLinkToClipboard);
+
+
+            // Function to generate the QR Code
+            function generateQRCode() {
+                const text = textInput.value.trim();
+
+                if (!text) {
+                    showToast('내용을 입력해주세요.', true);
+                    textInput.focus();
+                    return;
+                }
+
+                // Clear previous QR code if exists
+                qrcodeDiv.innerHTML = '';
+                
+                try {
+                    // Create new QR Code using the qrcode.js library
+                    currentQRCode = new QRCode(qrcodeDiv, {
+                        text: text,
+                        width: 200, // Size in pixels
+                        height: 200,
+                        colorDark : "#000000",
+                        colorLight : "#ffffff",
+                        correctLevel : QRCode.CorrectLevel.H // High error correction
+                    });
+
+                    showQRCode();
+                } catch (error) {
+                    console.error("Error generating QR code:", error);
+                    showToast('QR 코드 생성 중 오류가 발생했습니다.', true);
+                }
+            }
+
+            // Function to reveal the QR code section with animation
+            function showQRCode() {
+                emptyState.classList.add('hidden');
+                qrContainer.classList.remove('hidden');
+                
+                // Trigger reflow to restart animation if generating again
+                void qrContainer.offsetWidth; 
+                
+                qrContainer.classList.add('qr-animate');
+            }
+
+            // Function to hide the QR code section
+            function hideQRCode() {
+                qrContainer.classList.remove('qr-animate');
+                qrContainer.classList.add('hidden');
+                emptyState.classList.remove('hidden');
+                qrcodeDiv.innerHTML = '';
+                currentQRCode = null;
+            }
+
+            // Function to download the generated QR code image
+            function downloadQRCode() {
+                const img = qrcodeDiv.querySelector('img');
+                const canvas = qrcodeDiv.querySelector('canvas');
+                
+                if (!img && !canvas) {
+                    showToast('다운로드할 QR 코드가 없습니다.', true);
+                    return;
+                }
+
+                // Prefer image source if available (qrcode.js generates both usually)
+                let imageSrc = '';
+                if (img && img.src) {
+                    imageSrc = img.src;
+                } else if (canvas) {
+                    imageSrc = canvas.toDataURL("image/png");
+                }
+
+                if (imageSrc) {
+                    const link = document.createElement('a');
+                    link.href = imageSrc;
+                    // Provide a default filename based on a snippet of the input
+                    const safeName = textInput.value.trim().substring(0, 10).replace(/[^a-z0-9]/gi, '_');
+                    link.download = `qrcode_${safeName || 'generated'}.png`;
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                } else {
+                    showToast('이미지 데이터를 가져올 수 없습니다.', true);
+                }
+            }
+
+            // Function to copy the input text to clipboard
+            function copyLinkToClipboard() {
+                const text = textInput.value.trim();
+                if (!text) return;
+
+                // Create a temporary textarea to hold the text to copy
+                const textArea = document.createElement("textarea");
+                textArea.value = text;
+                
+                // Avoid scrolling to bottom
+                textArea.style.top = "0";
+                textArea.style.left = "0";
+                textArea.style.position = "fixed";
+                
+                document.body.appendChild(textArea);
+                textArea.focus();
+                textArea.select();
+
+                try {
+                    const successful = document.execCommand('copy');
+                    if (successful) {
+                        showToast('입력된 내용이 복사되었습니다!');
+                    } else {
+                        showToast('복사에 실패했습니다.', true);
+                    }
+                } catch (err) {
+                    console.error('Fallback: Oops, unable to copy', err);
+                    showToast('복사에 실패했습니다.', true);
+                }
+
+                document.body.removeChild(textArea);
+            }
+
+            
+            // Function to show temporary toast notification
+            let toastTimeout;
+            function showToast(message, isError = false) {
+                toast.textContent = message;
+                
+                if (isError) {
+                    toast.classList.remove('bg-gray-800');
+                    toast.classList.add('bg-red-600');
+                } else {
+                    toast.classList.remove('bg-red-600');
+                    toast.classList.add('bg-gray-800');
+                }
+
+                toast.classList.remove('opacity-0');
+                toast.classList.add('opacity-100');
+                
+                clearTimeout(toastTimeout);
+                toastTimeout = setTimeout(() => {
+                    toast.classList.remove('opacity-100');
+                    toast.classList.add('opacity-0');
+                }, 2500);
+            }
+        });
+    </script>
+</body>
+</html>
